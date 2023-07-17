@@ -80,7 +80,7 @@ internal sealed class LoggingService : BackgroundService
         var fileLogger = new LogFileTarget("FileLogger", this) { Layout = layout };
         var consoleLogger = new ColorfulConsoleTarget("ConsoleLogger") { Layout = layout };
 
-        LogLevel minLevel;
+        LogLevel minLevel = LogLevel.Info;
         if (Environment.GetEnvironmentVariable("ENABLE_TRACE_LOGGING") == "1")
         {
             minLevel = LogLevel.Trace;
