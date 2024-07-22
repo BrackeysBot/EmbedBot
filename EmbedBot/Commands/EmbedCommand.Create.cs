@@ -21,7 +21,7 @@ internal sealed partial class EmbedCommand
         DiscordModalTextInput colorInput = modal.AddInput("Color", "e.g. #007EC6", maxLength: 7, isRequired: false);
         DiscordModalTextInput descriptionInput = modal.AddInput("Description", "The body of the embed.", isRequired: true, maxLength: 2048, inputStyle: TextInputStyle.Paragraph);
 
-        DiscordModalResponse response = await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5)).ConfigureAwait(false);
+        DiscordModalResponse response = await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5));
         if (response == DiscordModalResponse.Timeout)
         {
             return;
@@ -44,9 +44,7 @@ internal sealed partial class EmbedCommand
         embed.WithTitle(titleInput.Value);
         embed.WithDescription(descriptionInput.Value);
 
-        await channel.SendMessageAsync(embed).ConfigureAwait(false);
-        await context
-            .FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Embed created in {channel.Mention}"))
-            .ConfigureAwait(false);
+        await channel.SendMessageAsync(embed);
+        await context.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Embed created in {channel.Mention}"));
     }
 }

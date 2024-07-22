@@ -30,7 +30,7 @@ internal sealed class InfoCommand : ApplicationCommandModule
     public async Task InfoAsync(InteractionContext context)
     {
         DiscordClient client = context.Client;
-        DiscordMember member = (await client.CurrentUser.GetAsMemberOfAsync(context.Guild).ConfigureAwait(false))!;
+        DiscordMember member = (await client.CurrentUser.GetAsMemberOfAsync(context.Guild))!;
         string hammerVersion = _botService.Version;
 
         var embed = new DiscordEmbedBuilder();
@@ -50,6 +50,6 @@ internal sealed class InfoCommand : ApplicationCommandModule
 
         embed.AddField("Version", Formatter.BlockCode(builder.ToString()));
 
-        await context.CreateResponseAsync(embed, true).ConfigureAwait(false);
+        await context.CreateResponseAsync(embed, true);
     }
 }

@@ -51,7 +51,7 @@ public sealed class DiscordModal
             builder.AddComponents(input.InputComponent);
 
         _taskCompletionSource = new TaskCompletionSource();
-        await interaction.CreateResponseAsync(InteractionResponseType.Modal, builder).ConfigureAwait(false);
+        await interaction.CreateResponseAsync(InteractionResponseType.Modal, builder);
 
         var cancellationTokenSource = new CancellationTokenSource();
         cancellationTokenSource.Token.Register(() => _taskCompletionSource.TrySetCanceled());
@@ -62,7 +62,7 @@ public sealed class DiscordModal
 
         try
         {
-            await _taskCompletionSource.Task.ConfigureAwait(false);
+            await _taskCompletionSource.Task;
             return DiscordModalResponse.Success;
         }
         catch (TaskCanceledException)

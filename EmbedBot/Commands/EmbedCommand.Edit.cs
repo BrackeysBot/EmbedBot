@@ -21,7 +21,7 @@ internal sealed partial class EmbedCommand
         if (!match.Success)
         {
             response.WithContent("Invalid message link.");
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -32,7 +32,7 @@ internal sealed partial class EmbedCommand
         if (guildId != context.Guild.Id)
         {
             response.WithContent("The message must be in this guild.");
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -40,29 +40,29 @@ internal sealed partial class EmbedCommand
         if (channel is null)
         {
             response.WithContent($"The channel {channelId} does not exist.");
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
-        DiscordMessage? message = await channel.GetMessageAsync(messageId).ConfigureAwait(false);
+        DiscordMessage? message = await channel.GetMessageAsync(messageId);
         if (message is null)
         {
             response.WithContent($"The message {messageId} does not exist.");
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
         if (message.Author.Id != context.Client.CurrentUser.Id)
         {
             response.WithContent("The message must be sent by this bot.");
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
         if (message.Embeds.Count == 0)
         {
             response.WithContent("The message must contain an embed to edit.");
-            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
+            await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response);
             return;
         }
 
@@ -76,7 +76,7 @@ internal sealed partial class EmbedCommand
         DiscordModalTextInput descriptionInput = modal.AddInput("Description", "The body of the embed.", isRequired: true, maxLength: 2048, inputStyle: TextInputStyle.Paragraph, initialValue: builder.Description);
 
         DiscordModalResponse modalResponse =
-            await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5)).ConfigureAwait(false);
+            await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5));
         if (modalResponse == DiscordModalResponse.Timeout)
         {
             return;
@@ -98,10 +98,8 @@ internal sealed partial class EmbedCommand
         builder.WithTitle(titleInput.Value);
         builder.WithDescription(descriptionInput.Value);
 
-        await message.ModifyAsync(embed: builder.Build()).ConfigureAwait(false);
-        await context
-            .FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Embed edited for {message.JumpLink}"))
-            .ConfigureAwait(false);
+        await message.ModifyAsync(embed: builder.Build());
+        await context.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Embed edited for {message.JumpLink}"));
     }
 
     [GeneratedRegex("^https://discord(?:canary)?\\.com/channels/(\\d+)/(\\d+)/(\\d+)$", RegexOptions.Compiled)]
