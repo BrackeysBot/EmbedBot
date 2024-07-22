@@ -3,9 +3,9 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
+using EmbedBot.Extensions;
 using EmbedBot.Services;
 using Humanizer;
-using X10D.DSharpPlus;
 
 namespace EmbedBot.Commands;
 
