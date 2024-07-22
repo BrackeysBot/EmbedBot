@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
@@ -71,12 +71,15 @@ internal sealed partial class EmbedCommand
         var modal = new DiscordModalBuilder(context.Client);
         modal.WithTitle("Edit Embed");
 
-        DiscordModalTextInput titleInput = modal.AddInput("Title", "The title of the embed.", maxLength: 256, isRequired: true, initialValue: builder.Title);
+        DiscordModalTextInput titleInput = modal.AddInput("Title", "The title of the embed.", maxLength: 256, isRequired: false, initialValue: builder.Title);
         DiscordModalTextInput colorInput = modal.AddInput("Color", "e.g. #007EC6", maxLength: 7, isRequired: false, initialValue: builder.Color.HasValue ? builder.Color.Value.ToString() : null);
         DiscordModalTextInput descriptionInput = modal.AddInput("Description", "The body of the embed.", isRequired: true, maxLength: 2048, inputStyle: TextInputStyle.Paragraph, initialValue: builder.Description);
         
         DiscordModalResponse modalResponse = await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5)).ConfigureAwait(false);
         if (modalResponse == DiscordModalResponse.Timeout)
+            return;
+
+        if (string.IsNullOrWhiteSpace(titleInput.Value) && string.IsNullOrWhiteSpace(descriptionInput.Value))
             return;
 
         DiscordColor color = builder.Color.HasValue ? builder.Color.Value : DiscordColor.CornflowerBlue;
