@@ -1,4 +1,4 @@
-﻿namespace EmbedBot.Interactivity;
+namespace EmbedBot.Interactivity;
 
 /// <summary>
 ///     Represents a state of a <see cref="Conversation" />.

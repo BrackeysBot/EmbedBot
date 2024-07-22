@@ -1,4 +1,4 @@
-﻿using DSharpPlus;
+using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using EmbedBot.Interactivity;
@@ -35,7 +35,9 @@ internal sealed partial class EmbedCommand
         DiscordColor color = DiscordColor.CornflowerBlue;
 
         if (!string.IsNullOrWhiteSpace(colorInput.Value))
+        {
             color = new DiscordColor(colorInput.Value);
+        }
 
         var embed = new DiscordEmbedBuilder();
         embed.WithColor(color);

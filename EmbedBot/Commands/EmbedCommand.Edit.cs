@@ -65,7 +65,7 @@ internal sealed partial class EmbedCommand
             await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, response).ConfigureAwait(false);
             return;
         }
-        
+
         var builder = new DiscordEmbedBuilder(message.Embeds[0]);
 
         var modal = new DiscordModalBuilder(context.Client);
@@ -74,19 +74,26 @@ internal sealed partial class EmbedCommand
         DiscordModalTextInput titleInput = modal.AddInput("Title", "The title of the embed.", maxLength: 256, isRequired: false, initialValue: builder.Title);
         DiscordModalTextInput colorInput = modal.AddInput("Color", "e.g. #007EC6", maxLength: 7, isRequired: false, initialValue: builder.Color.HasValue ? builder.Color.Value.ToString() : null);
         DiscordModalTextInput descriptionInput = modal.AddInput("Description", "The body of the embed.", isRequired: true, maxLength: 2048, inputStyle: TextInputStyle.Paragraph, initialValue: builder.Description);
-        
-        DiscordModalResponse modalResponse = await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5)).ConfigureAwait(false);
+
+        DiscordModalResponse modalResponse =
+            await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5)).ConfigureAwait(false);
         if (modalResponse == DiscordModalResponse.Timeout)
+        {
             return;
+        }
 
         if (string.IsNullOrWhiteSpace(titleInput.Value) && string.IsNullOrWhiteSpace(descriptionInput.Value))
+        {
             return;
+        }
 
         DiscordColor color = builder.Color.HasValue ? builder.Color.Value : DiscordColor.CornflowerBlue;
-        
+
         if (!string.IsNullOrWhiteSpace(colorInput.Value))
+        {
             color = new DiscordColor(colorInput.Value);
-        
+        }
+
         builder.WithColor(color);
         builder.WithTitle(titleInput.Value);
         builder.WithDescription(descriptionInput.Value);
