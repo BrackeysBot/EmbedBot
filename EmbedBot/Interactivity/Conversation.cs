@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 
 namespace EmbedBot.Interactivity;
 
@@ -16,7 +16,7 @@ public sealed class Conversation
     {
         Services = services;
     }
-    
+
     public ConcurrentDictionary<string, bool> BooleanBlackboard { get; } = new();
     public ConcurrentDictionary<string, int> Int32BlackBoard { get; } = new();
     public ConcurrentDictionary<string, string> StringBlackboard { get; } = new();

@@ -8,6 +8,4 @@ namespace EmbedBot.Commands;
 /// </summary>
 [SlashCommandGroup("embed", "Manges embeds.", false)]
 [SlashRequireGuild]
-internal sealed partial class EmbedCommand : ApplicationCommandModule
-{
-}
+internal sealed partial class EmbedCommand : ApplicationCommandModule;
