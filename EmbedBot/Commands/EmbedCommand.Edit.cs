@@ -73,7 +73,7 @@ internal sealed partial class EmbedCommand
 
         DiscordModalTextInput titleInput = modal.AddInput("Title", "The title of the embed.", maxLength: 256, isRequired: false, initialValue: builder.Title);
         DiscordModalTextInput colorInput = modal.AddInput("Color", "e.g. #007EC6", maxLength: 7, isRequired: false, initialValue: builder.Color.HasValue ? builder.Color.Value.ToString() : null);
-        DiscordModalTextInput descriptionInput = modal.AddInput("Description", "The body of the embed.", isRequired: true, maxLength: 2048, inputStyle: TextInputStyle.Paragraph, initialValue: builder.Description);
+        DiscordModalTextInput descriptionInput = modal.AddInput("Description", "The body of the embed.", isRequired: false, maxLength: 2048, inputStyle: TextInputStyle.Paragraph, initialValue: builder.Description);
 
         DiscordModalResponse modalResponse =
             await modal.Build().RespondToAsync(context.Interaction, TimeSpan.FromMinutes(5));
