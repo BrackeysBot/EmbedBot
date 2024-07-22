@@ -102,6 +102,6 @@ internal sealed partial class EmbedCommand
         await context.FollowUpAsync(new DiscordFollowupMessageBuilder().WithContent($"Embed edited for {message.JumpLink}"));
     }
 
-    [GeneratedRegex("^https://discord(?:canary)?\\.com/channels/(\\d+)/(\\d+)/(\\d+)$", RegexOptions.Compiled)]
+    [GeneratedRegex(@"^https://discord(?:canary)?\.com/channels/(\d+)/(\d+)/(\d+)$", RegexOptions.Compiled)]
     private static partial Regex GetMessageLinkRegex();
 }
